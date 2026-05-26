@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "guadalcanal-97f00-1f01c",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
