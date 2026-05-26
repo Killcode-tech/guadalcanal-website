@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guadalcanal Website</title>
+</head>
+<body>
+  <h1>Welcome to Guadalcanal!</h1>
+  <input type="text" id="nameInput" placeholder="Enter your name" />
+  <button onclick="saveData()">Save</button>
+  <ul id="list"></ul>
+
+<script type="module">
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs }
+    from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDJJenmBCVtwj6p3QK9ZUYVHzf3Lfkd0-E",
+    authDomain: "guadalcanal-97f00.firebaseapp.com",
+    projectId: "guadalcanal-97f00",
+    storageBucket: "guadalcanal-97f00.firebasestorage.app",
+    messagingSenderId: "86386665192",
+    appId: "1:86386665192:web:bd5a1a63f3dbbf38e60b5d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.saveData = async function() {
+    const name = document.getElementById("nameInput").value;
+    await addDoc(collection(db, "entries"), { name });
+    alert("Saved!");
+    loadData();
+  }
+
+  async function loadData() {
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+    const snap = await getDocs(collection(db, "entries"));
+    snap.forEach(doc => {
+      const li = document.createElement("li");
+      li.textContent = doc.data().name;
+      list.appendChild(li);
+    });
+  }
+
+  loadData();
+</script>
+</body>
+</html>
